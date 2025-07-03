@@ -18,4 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
     blowBtn.disabled = true; // 只能吹一次
     blowBtn.innerText = '蜡烛已吹～ 愿望会实现哒 ✨';
   });
+  
+  const enterEl = document.getElementById("enter");
+  if (enterEl) {
+    enterEl.addEventListener("click", () => {
+      // 事件处理逻辑
+    });
 });
