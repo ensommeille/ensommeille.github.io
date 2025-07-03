@@ -1,47 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>about</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>About - Ensommeille</title>
+  <!-- 原有通用 meta / 基础样式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="css/style.css"> 
+  <!-- 生日祝福专属样式 -->
+  <link rel="stylesheet" href="css/birthday.css"> 
 </head>
 <body>
-    <div class="profile-card">
-        <div class="profile-card-img">
-            <img src="assets/avatar.jpg" alt="头像">
+  <main>
+    <!-- 原有 About 页面结构（保留头像、签名等） -->
+    <div class="content content-main">
+      <div id="card">
+        <div class="card-inner fade">
+          <header>
+            <img src="assets/avatar.jpg" width="100" height="100" alt="avatar">
+            <h1 data-translate="name">Ensommeille</h1>
+            <h2 id="signature" data-translate="signature">Code & Input & Output</h2>
+          </header>
+          <ul>
+            <li>
+              <a href="https://www.notion.so/xxx" aria-label="Blog">
+                <i class="icon icon-bokeyuan"></i>
+                <span data-translate="Blog">Blog</span>
+              </a>
+            </li>
+            <li>
+              <a href="/about" aria-label="About">
+                <i class="icon icon-xiaolian"></i>
+                <span data-translate="About">About</span>
+              </a>
+            </li>
+            <li>
+              <a href="mailto:lumoslc@outlook.com" aria-label="Email" target="_blank">
+                <i class="icon icon-email"></i>
+                <span data-translate="Email">Email</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/ensommeille" aria-label="Github" target="_blank">
+                <i class="icon icon-github"></i>
+                <span data-translate="Github">Github</span>
+              </a>
+            </li>
+          </ul>
         </div>
-        <div class="profile-card-desc">
-            <h1>Ensommeille</h1>
-            <div>学习ing</div>
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <circle cx="12" cy="11" r="3"></circle>
-                    <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
-                </svg>
-                来自武汉
-            </div>
+      </div>
+
+      <!-- 新增：生日祝福核心区域 -->
+      <div class="birthday-section">
+        <h2 class="birthday-title">亲爱的刘俞嵘，生日快乐！</h2>
+        <div class="birthday-message">
+          <p>这是专属你的生日祝福页~</p>
+          <p>愿你每天都像今天一样开心 ❤️</p>
         </div>
-        <div class="profile-card-info">
-            <div>
-                <div>800W</div>
-                <div>粉丝数</div>
-            </div>
-            <div>
-                <div>50</div>
-                <div>关注者</div>
-            </div>
-            <div>
-                <div>5000</div>
-                <div>点赞数</div>
-            </div>
+
+        <!-- 互动 1：点击爱心 -->
+        <button id="love-btn" class="birthday-btn">
+          <i class="icon icon-heart"></i> 点击收爱心
+        </button>
+        <div id="love-effect" class="love-effect hidden">
+          ❤️❤️❤️ 爱你哟～ ❤️❤️❤️
         </div>
-        <div class="profile-card-social">
-            <a href="#" class="qq">QQ</a>
-            <a href="#" class="wechat">微信</a>
-            <a href="#" class="douyin">抖音</a>
+
+        <!-- 互动 2：吹蜡烛（简化版） -->
+        <div class="cake">
+          <div class="candle" id="candle"></div>
+          <button id="blow-btn" class="birthday-btn">吹蜡烛 🕯️</button>
         </div>
+      </div>
     </div>
+
+    <!-- 原有通用脚本 -->
+    <script src="js/main.js"></script>
+    <script src="js/background.js"></script>
+    <!-- 生日祝福专属脚本 -->
+    <script src="js/birthday.js"></script>
+  </main>
 </body>
 </html>
