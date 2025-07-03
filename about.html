@@ -1,86 +1,280 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <title>About - Ensommeille</title>
-  <!-- 原有通用 meta / 基础样式 -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="stylesheet" href="css/style.css"> 
-  <!-- 生日祝福专属样式 -->
-  <link rel="stylesheet" href="css/birthday.css"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刘俞嵘 · 生日祝福</title>
+    <style>
+        /* 基础重置与全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #FFE6F7, #C9E4F9);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* 容器与卡片动画 */
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            height: 550px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 24px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 顶部装饰条（营造高级感细节） */
+        .top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #FF8BD2, #7AC1FF);
+        }
+
+        /* 内容区布局 */
+        .content {
+            position: relative;
+            height: 100%;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 标题与副标题 */
+        .title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 36px;
+            opacity: 0.9;
+        }
+
+        /* 动态文本强调（姓名部分） */
+        .name-highlight {
+            color: #FF66B2;
+            position: relative;
+            display: inline-block;
+        }
+
+        .name-highlight::after {
+            content: "";
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #FF66B2;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .container:hover .name-highlight::after {
+            transform: scaleX(1);
+        }
+
+        /* 生日祝福文本段落 */
+        .message {
+            font-size: 1rem;
+            color: #444;
+            line-height: 1.8;
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: messageFade 0.8s 0.4s ease-in-out forwards;
+        }
+
+        @keyframes messageFade {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 分隔线（简约高级） */
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: #FF8BD2;
+            margin: 24px 0;
+            opacity: 0;
+            transform: scaleX(0.5);
+            animation: dividerExpand 0.6s 0.6s ease-in-out forwards;
+        }
+
+        @keyframes dividerExpand {
+            to { opacity: 1; transform: scaleX(1); }
+        }
+
+        /* 倒计时/烟花彩蛋（Canvas 简化版，无需额外 JS 文件） */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* 交互按钮（点击触发小动画） */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(90deg, #FF8BD2, #7AC1FF);
+            color: #fff;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: btnFade 0.8s 0.8s ease-in-out forwards;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 102, 178, 0.3);
+        }
+
+        @keyframes btnFade {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 600px) {
+            .title {
+                font-size: 2rem;
+            }
+            .content {
+                padding: 40px 24px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <main>
-    <!-- 原有 About 页面结构（保留头像、签名等） -->
-    <div class="content content-main">
-      <div id="card">
-        <div class="card-inner fade">
-          <header>
-            <img src="assets/avatar.jpg" width="100" height="100" alt="avatar">
-            <h1 data-translate="name">Ensommeille</h1>
-            <h2 id="signature" data-translate="signature">Code & Input & Output</h2>
-          </header>
-          <ul>
-            <li>
-              <a href="https://www.notion.so/xxx" aria-label="Blog">
-                <i class="icon icon-bokeyuan"></i>
-                <span data-translate="Blog">Blog</span>
-              </a>
-            </li>
-            <li>
-              <a href="about.html" aria-label="About">
-                <i class="icon icon-xiaolian"></i>
-                <span data-translate="About">About</span>
-              </a>
-            </li>
-            <li>
-              <a href="mailto:lumoslc@outlook.com" aria-label="Email" target="_blank">
-                <i class="icon icon-email"></i>
-                <span data-translate="Email">Email</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/ensommeille" aria-label="Github" target="_blank">
-                <i class="icon icon-github"></i>
-                <span data-translate="Github">Github</span>
-              </a>
-            </li>
-          </ul>
+    <!-- 烟花Canvas（极简实现，不依赖外部JS） -->
+    <canvas id="fireworks"></canvas>
+    <div class="container">
+        <div class="top-bar"></div>
+        <div class="content">
+            <h1 class="title">
+                祝 <span class="name-highlight">刘俞嵘</span> 生日快乐
+            </h1>
+            <p class="subtitle">
+                新的一岁，愿美好常伴，所行皆坦途 🌟
+            </p>
+            <p class="message">
+                从春的温柔到冬的静谧，每一段时光都值得被铭记。愿你在这一岁里，
+                找到热爱、奔赴山海，笑靥如花，诸事胜意。
+            </p>
+            <p class="message">
+                生活偶尔像未拆的礼物，拆开的瞬间满是惊喜 —— 这一岁，定是最特别的那一份 🎁
+            </p>
+            <div class="divider"></div>
+            <a href="#" class="btn" onclick="toggleFireworks()">点我看小惊喜</a>
         </div>
-      </div>
-
-      <!-- 新增：生日祝福核心区域 -->
-      <div class="birthday-section">
-        <h2 class="birthday-title">亲爱的刘俞嵘，生日快乐！</h2>
-        <div class="birthday-message">
-          <p>这是专属你的生日祝福页~</p>
-          <p>愿你每天都像今天一样开心 ❤️</p>
-        </div>
-
-        <!-- 互动 1：点击爱心 -->
-        <button id="love-btn" class="birthday-btn">
-          <i class="icon icon-heart"></i> 点击收爱心
-        </button>
-        <button id="enter">点击收爱心</button>
-        <div id="love-effect" class="love-effect hidden">
-          ❤️❤️❤️ 爱你哟～ ❤️❤️❤️
-        </div>
-
-        <!-- 互动 2：吹蜡烛（简化版） -->
-        <div class="cake">
-          <div class="candle" id="candle"></div>
-          <button id="blow-btn" class="birthday-btn">吹蜡烛 🕯️</button>
-        </div>
-      </div>
     </div>
 
-    <!-- 原有通用脚本 -->
-    <script src="js/main.js"></script>
-    <script src="js/background.js"></script>
-    <!-- 生日祝福专属脚本 -->
-    <script src="js/birthday.js"></script>
-  </main>
+    <!-- 极简烟花逻辑（内联JS，无需额外文件） -->
+    <script>
+        // 烟花Canvas极简实现
+        const canvas = document.getElementById('fireworks');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let isFireworksActive = false;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function Particle(x, y, color) {
+            this.x = x;
+            this.y = y;
+            this.speed = Math.random() * 6 + 2;
+            this.angle = Math.random() * Math.PI * 2;
+            this.alpha = 1;
+            this.decay = Math.random() * 0.01 + 0.005;
+            this.color = color;
+        }
+
+        Particle.prototype.update = function() {
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed;
+            this.alpha -= this.decay;
+            this.speed *= 0.98;
+        };
+
+        Particle.prototype.draw = function() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`;
+            ctx.fill();
+        };
+
+        function createFireworks(x, y) {
+            const colors = [
+                { r: 255, g: 136, b: 199 },
+                { r: 122,  g: 193, b: 255 },
+                { r: 255,  g: 209, b: 122 }
+            ];
+            for (let i = 0; i < 80; i++) {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particles.push(new Particle(x, y, color));
+            }
+        }
+
+        function animateFireworks() {
+            if (!isFireworksActive) return;
+            requestAnimationFrame(animateFireworks);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.update();
+                p.draw();
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+        }
+
+        function toggleFireworks() {
+            if (!isFireworksActive) {
+                isFireworksActive = true;
+                animateFireworks();
+                // 定时触发几次烟花
+                setTimeout(() => createFireworks(canvas.width/2, canvas.height/2), 300);
+                setTimeout(() => createFireworks(canvas.width/3, canvas.height/2 + 50), 800);
+                setTimeout(() => createFireworks(canvas.width*2/3, canvas.height/2 - 50), 1300);
+            }
+        }
+    </script>
 </body>
 </html>
